@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A neighborhood map of Brooklyn, NY">
+  <meta name="author" content="Stella Jiang">
+  <title>A Neighborhood Map of Brooklyn, NY</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="library/bootstrap.min.css">
+</head>
+  <body>
+    <div class="container">
+      <div class="options-box">
+        <h3>Awesome Restaurants in Brooklyn, NY</h3>
+        <div class ="error" data-bind="visible: showMapMessage">
+          <h4>Google Map is currently not loading. Please try again later.</h4>
+        </div>
+        <div class ="error" data-bind="visible: showErrorMessage">
+          <h4>Foursquare data is currently not available. Please try again later.</h4>
+        </div>
+        <input type="search" class="col-xs-12 searchbar" placeholder="Search ..." data-bind="textInput: userInput, event: {keyup: filterLocations}">
+        <div>
+          
+          <ul data-bind="foreach: visible" class="nav">
+            <li data-bind="text: name, click: $parent.showInfo"></li>
+          </ul>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlTYVk2MWB8VDweRtT1CDNoJJ16sm1DQg&v=3&callback=initMap"></script>
+    <script async src="app.js"></script>
+    <script src="Library/knockout-3.4.0.js"></script>
+    <script async src="Library/jquery-2.2.3.min.js"></script>
+  </body>
+</html>
