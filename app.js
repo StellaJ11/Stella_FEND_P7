@@ -1,5 +1,84 @@
 
-var map;
+
+//Model
+var Location = function(data) {
+    var self = this;
+    self.title = ko.observable(data.title);
+    self.lat = ko.observable(data.lat);
+    self.lng = ko.observable(data.lng);
+    self.address = ko.observable('');
+    self.marker = ko.observable('');
+    self.content = ko.observable('');
+};
+
+//View Model
+var ViewModel = function() {
+    var self = this;
+    self.places = ko.observableArray(locations);
+    self.query = ko.observable('');
+    self.filteredLocations = ko.observableArray([]);
+        //Search all available locations for ones whose names match the queries and add them to the array
+        for (var x = 0; x < self.locations().length; x++) {
+            if (self.locations()[x].name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
+                self.filteredLocations.push(self.locations()[x]);
+            }
+        }
+        //Add new filtered markers to the map
+        for (var i = 0; i < self.filteredLocations().length; i++) {
+            if (self.filteredLocations()[i].marker.map === null) {
+                self.filteredLocations()[i].marker.setMap(self.map);
+            }
+        }
+
+    //Run FourSquare API calls to get data
+    var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+        client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+        infowindow = new google.maps.InfoWindow,
+        searchInput,
+        location,
+        marker, 
+        venue;
+
+    var request = $.ajax({
+        url:'https://api.foursquare.com/v2/venues/search',
+        dataType: 'json',
+        data:   'limit=1' +
+                '&ll=40.707496,-73.990774' +
+                '&query=' + placeItem.title() +
+                '&client_id='+ client_id +
+                '&client_secret='+ client_secret +
+                '&v=20161113',
+    })
+
+    // Create a new blank array for all the listing markers.
+    var markers = [];
+
+    var map;
+     
+    var largeInfowindow = new google.maps.InfoWindow();
+    // The following group uses the location array to create an array of markers on initialize.
+        for (var i = 0; i < locations.length; i++) {
+            // Get the position from the location array.
+            var position = locations[i].location;
+            var title = locations[i].title;
+            // Create a marker per location, and put into markers array.
+            var marker = new google.maps.Marker({
+                position: position,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                id: i,
+                map: map
+            });
+            // Push the marker to our array of markers.
+            markers.push(marker);
+            // Create an onclick event to open an infowindow at each marker.
+            marker.addListener('click', function() {
+                populateInfoWindow(this, largeInfowindow);
+            });
+        }
+   
+};
+
     
 //Show error message when Google Map is unavailable
 function googleError() {
@@ -7,6 +86,7 @@ function googleError() {
 }
 
 function initMap() {
+
     //Create a new map 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -79,81 +159,6 @@ function initMap() {
         }
     }];
 
-var Location = function(data) {
-    var self = this;
-    self.title = ko.observable(data.title);
-    self.lat = ko.observable(data.lat);
-    self.lng = ko.observable(data.lng);
-    self.address = ko.observable('');
-    self.marker = ko.observable('');
-    self.content = ko.observable('');
-};
-
-var ViewModel = function() {
-    var self = this;
-    self.places = ko.observableArray(locations);
-    self.query = ko.observable('');
-    self.filteredLocations = ko.observableArray([]);
-        //Search all available locations for ones whose names match the queries and add them to the array
-        for (var x = 0; x < self.locations().length; x++) {
-            if (self.locations()[x].name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
-                self.filteredLocations.push(self.locations()[x]);
-            }
-        }
-        //Add new filtered markers to the map
-        for (var i = 0; i < self.filteredLocations().length; i++) {
-            if (self.filteredLocations()[i].marker.map === null) {
-                self.filteredLocations()[i].marker.setMap(self.map);
-            }
-        }
-
-    //Set up FourSquare API
-    var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
-        client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
-        infowindow = new google.maps.InfoWindow,
-        searchInput,
-        location,
-        marker, 
-        venue;
-
-    var request = $.ajax({
-        url:'https://api.foursquare.com/v2/venues/search',
-        dataType: 'json',
-        data:   'limit=1' +
-                '&ll=40.707496,-73.990774' +
-                '&query=' + placeItem.title() +
-                '&client_id='+ client_id +
-                '&client_secret='+ client_secret +
-                '&v=20161113',
-    })
-
-};
-
-// Create a new blank array for all the listing markers.
-var markers = [];
-     
-var largeInfowindow = new google.maps.InfoWindow();
-    // The following group uses the location array to create an array of markers on initialize.
-    for (var i = 0; i < locations.length; i++) {
-        // Get the position from the location array.
-        var position = locations[i].location;
-        var title = locations[i].title;
-        // Create a marker per location, and put into markers array.
-        var marker = new google.maps.Marker({
-            position: position,
-            title: title,
-            animation: google.maps.Animation.DROP,
-            id: i,
-            map: map
-        });
-        // Push the marker to our array of markers.
-        markers.push(marker);
-        // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-        });
-    }
-   
 }
 
 // This function populates the infowindow when the marker is clicked. 
