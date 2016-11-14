@@ -107,7 +107,27 @@ var ViewModel = function() {
             }
         }
 
-}
+    //Set up FourSquare API
+    var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+        client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+        infowindow = new google.maps.InfoWindow,
+        searchInput,
+        location,
+        marker, 
+        venue;
+
+    var request = $.ajax({
+        url:'https://api.foursquare.com/v2/venues/search',
+        dataType: 'json',
+        data:   'limit=1' +
+                '&ll=40.707496,-73.990774' +
+                '&query=' + placeItem.title() +
+                '&client_id='+ client_id +
+                '&client_secret='+ client_secret +
+                '&v=20161113',
+    })
+
+};
 
 // Create a new blank array for all the listing markers.
 var markers = [];
@@ -136,9 +156,7 @@ var largeInfowindow = new google.maps.InfoWindow();
    
 }
 
-// This function populates the infowindow when the marker is clicked. We'll only allow
-// one infowindow which will open at the marker that is clicked, and populate based
-// on that markers position.
+// This function populates the infowindow when the marker is clicked. 
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
