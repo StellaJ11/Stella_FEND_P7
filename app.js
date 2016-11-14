@@ -113,7 +113,6 @@ var ViewModel = function() {
 var markers = [];
      
 var largeInfowindow = new google.maps.InfoWindow();
-
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
         // Get the position from the location array.

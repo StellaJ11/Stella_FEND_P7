@@ -23,11 +23,6 @@ h1 {
     text-align: center;
 }
 
-#hide-listings,
-#show-listings {
-    width: 48%;
-}
-
 #map {
     bottom: 0px;
     height: 100%;
@@ -49,4 +44,39 @@ h1 {
 
 .searchbar {
     margin-bottom: 20px;
+}
+
+/*On different screen sizes, set readable font-size*/
+@media screen and (max-width: 340px) {
+    li {
+        font-size: 10px;
+    }
+
+    li:hover {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    li {
+        font-size: 14px;
+    }
+    li:hover {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    li {
+        font-size: 18px;
+    }
+    li:hover {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #iWindow {
+        width: 100px;
+    }
 }
