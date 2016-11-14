@@ -1,5 +1,4 @@
 
-
 var map;
     
 //Show error message when Google Map is unavailable
@@ -8,7 +7,7 @@ function googleError() {
 }
 
 function initMap() {
-    // Constructor creates a new map - only center and zoom are required.
+    //Create a new map 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 40.707496,
@@ -125,7 +124,8 @@ var largeInfowindow = new google.maps.InfoWindow();
             position: position,
             title: title,
             animation: google.maps.Animation.DROP,
-            id: i
+            id: i,
+            map: map
         });
         // Push the marker to our array of markers.
         markers.push(marker);
@@ -156,3 +156,4 @@ function populateInfoWindow(marker, infowindow) {
 function initialize(){
     ko.applyBindings(new ViewModel());
 }
+
