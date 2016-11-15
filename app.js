@@ -1,6 +1,4 @@
 
-var map; 
-
 //Model
 var Location = function(data) {
     var self = this;
