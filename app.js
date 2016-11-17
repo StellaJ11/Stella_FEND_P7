@@ -13,6 +13,8 @@ var Location = function(data) {
 //View Model
 var ViewModel = function() {
     var self = this;
+    self.showMapMessage = ko.observable(false);
+    self.showErrorMessage = ko.observable(false);
     self.places = ko.observableArray(locations);
     self.query = ko.observable('');
     self.filteredLocations = ko.observableArray([]);
@@ -48,19 +50,19 @@ var ViewModel = function() {
                 '&client_secret='+ client_secret +
                 '&v=20161113',
     })
+}
 
-    // This function populates the infowindow when the marker is clicked. 
-    function populateInfoWindow(marker, infowindow) {
-        // Check to make sure the infowindow is not already opened on this marker.
-        if (infowindow.marker != marker) {
-            infowindow.marker = marker;
-            infowindow.setContent('<div>' + marker.title + '</div>');
-            infowindow.open(map, marker);
-            // Make sure the marker property is cleared if the infowindow is closed.
-            infowindow.addListener('closeclick', function() {
-                infowindow.marker = null;
-            });
-        }
+// This function populates the infowindow when the marker is clicked. 
+function populateInfoWindow(marker, infowindow) {
+    // Check to make sure the infowindow is not already opened on this marker.
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent('<div>' + marker.title + '</div>');
+        infowindow.open(map, marker);
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener('closeclick', function() {
+            infowindow.marker = null;
+        });
     }
 }
 
@@ -80,7 +82,34 @@ var initMap = function() {
         mapTypeControl: false
     });
 
-    var locations = [{
+    var largeInfowindow = new google.maps.InfoWindow();
+    // The following group uses the location array to create an array of markers on initialize.
+        for (var i = 0; i < locations.length; i++) {
+            // Get the position from the location array.
+            var position = locations[i].location;
+            var title = locations[i].title;
+            // Create a marker per location, and put into markers array.
+            var marker = new google.maps.Marker({
+                position: position,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                id: i,
+                map: map
+            });
+            // Push the marker to our array of markers.
+            markers.push(marker);
+            // Create an onclick event to open an infowindow at each marker.
+            marker.addListener('click', function() {
+                populateInfoWindow(this, largeInfowindow);
+            });
+        }  
+
+    function initialize(){
+    ko.applyBindings(new ViewModel());
+}     
+}
+
+var locations = [{
         title: 'Dough',
         location: {
             lat: 40.689023,
@@ -141,36 +170,10 @@ var initMap = function() {
             lng: -73.985893
         }
     }];
-
-    var largeInfowindow = new google.maps.InfoWindow();
-    // The following group uses the location array to create an array of markers on initialize.
-        for (var i = 0; i < locations.length; i++) {
-            // Get the position from the location array.
-            var position = locations[i].location;
-            var title = locations[i].title;
-            // Create a marker per location, and put into markers array.
-            var marker = new google.maps.Marker({
-                position: position,
-                title: title,
-                animation: google.maps.Animation.DROP,
-                id: i,
-                map: map
-            });
-            // Push the marker to our array of markers.
-            markers.push(marker);
-            // Create an onclick event to open an infowindow at each marker.
-            marker.addListener('click', function() {
-                populateInfoWindow(this, largeInfowindow);
-            });
-        }   
-}
     
 //Show error message when Google Map is unavailable
 function googleError() {
     showMapMessage(true);
 }
 
-function initialize(){
-    ko.applyBindings(new ViewModel());
-}
 
