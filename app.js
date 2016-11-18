@@ -16,40 +16,40 @@ var ViewModel = function() {
     self.showMapMessage = ko.observable(false);
     self.showErrorMessage = ko.observable(false);
     self.places = ko.observableArray(locations);
-    self.query = ko.observable('');
-    self.filteredLocations = ko.observableArray([]);
-        //Search all available locations for ones whose names match the queries and add them to the array
-        for (var x = 0; x < self.locations().length; x++) {
-            if (self.locations()[x].name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
-                self.filteredLocations.push(self.locations()[x]);
-            }
-        }
+    self.userInput = ko.observable('');
+    //self.filteredLocations = ko.observableArray([]);
+        //Search all available locations for ones whose names match the search queries and add them to the array
+        //for (var x = 0; x < self.places().length; x++) {
+            //if (self.places()[x].name.toLowerCase().indexOf(self.userInput().toLowerCase()) >= 0) {
+                //self.filteredLocations.push(self.places()[x]);
+            //}
+        //}
         //Add new filtered markers to the map
-        for (var i = 0; i < self.filteredLocations().length; i++) {
-            if (self.filteredLocations()[i].marker.map === null) {
-                self.filteredLocations()[i].marker.setMap(self.map);
-            }
-        }
+        //for (var i = 0; i < self.filteredLocations().length; i++) {
+            //if (self.filteredLocations()[i].marker.map === null) {
+                //self.filteredLocations()[i].marker.setMap(self.map);
+            //}
+        //}
 
     //Run FourSquare API calls to get data
-    var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
-        client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
-        infowindow = new google.maps.InfoWindow,
-        searchInput,
-        location,
-        marker, 
-        venue;
+    //var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+        //client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+        //infowindow = new google.maps.InfoWindow,
+        //userInput,
+        //places,
+        //marker, 
+        //venue;
 
-    var request = $.ajax({
-        url:'https://api.foursquare.com/v2/venues/search',
-        dataType: 'json',
-        data:   'limit=1' +
-                '&ll=40.707496,-73.990774' +
-                '&query=' + placeItem.title() +
-                '&client_id='+ client_id +
-                '&client_secret='+ client_secret +
-                '&v=20161113',
-    })
+    //var request = $.ajax({
+        //url:'https://api.foursquare.com/v2/venues/search',
+        //dataType: 'json',
+        //data:   'limit=1' +
+                //'&ll=40.707496,-73.990774' +
+                //'&query=' + placeItem.title() +
+                //'&client_id='+ client_id +
+                //'&client_secret='+ client_secret +
+                //'&v=20161113',
+    //})
 }
 
 // This function populates the infowindow when the marker is clicked. 
@@ -104,9 +104,7 @@ var initMap = function() {
             });
         }  
 
-    function initialize(){
     ko.applyBindings(new ViewModel());
-}     
 }
 
 var locations = [{
