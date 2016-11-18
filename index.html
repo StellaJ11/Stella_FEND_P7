@@ -19,10 +19,10 @@
         <div class ="error" data-bind="visible: showErrorMessage">
           <h4>Foursquare data is currently not available. Please try again later.</h4>
         </div>
-        <input type="search" class="col-xs-12 searchbar" placeholder="Search ..." data-bind="textInput: userInput, event: {keyup: filterLocations}">
+        <input type="search" class="col-xs-12 searchbar" placeholder="Search ..." data-bind="textInput: query, event: {keyup: filterLocations}">
         <div>
           <ul data-bind="foreach: visible" class="nav">
-            <li data-bind="text: name, click: $parent.showInfo"></li>
+            <li data-bind="text: title, click: $parent.showInfo"></li>
           </ul>
         </div>
       </div>
@@ -31,6 +31,6 @@
     <script src="Library/knockout-3.4.0.js"></script>
     <script async src="Library/jquery-2.2.3.min.js"></script>
     <script src="app.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlTYVk2MWB8VDweRtT1CDNoJJ16sm1DQg&v=3&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlTYVk2MWB8VDweRtT1CDNoJJ16sm1DQg&v=3&callback=initMap" onerror="googleError()" ></script>
   </body>
 </html>

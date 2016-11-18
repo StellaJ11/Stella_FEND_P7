@@ -16,11 +16,11 @@ var ViewModel = function() {
     self.showMapMessage = ko.observable(false);
     self.showErrorMessage = ko.observable(false);
     self.places = ko.observableArray(locations);
-    self.userInput = ko.observable('');
+    self.query = ko.observable('');
     //self.filteredLocations = ko.observableArray([]);
         //Search all available locations for ones whose names match the search queries and add them to the array
         //for (var x = 0; x < self.places().length; x++) {
-            //if (self.places()[x].name.toLowerCase().indexOf(self.userInput().toLowerCase()) >= 0) {
+            //if (self.places()[x].title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
                 //self.filteredLocations.push(self.places()[x]);
             //}
         //}
@@ -35,7 +35,7 @@ var ViewModel = function() {
     //var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
         //client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
         //infowindow = new google.maps.InfoWindow,
-        //userInput,
+        //query,
         //places,
         //marker, 
         //venue;
