@@ -44,30 +44,30 @@ var ViewModel = function() {
         }
     });
 
-    // Show the marker when the user clicks the list
+    // Show the relevant marker when a user clicks a location from the list
     self.showInfo = function (locations) {
         google.maps.event.trigger(locations.marker, 'click');
     };    
 
     //Run FourSquare API calls to get data
-    //var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
-        //client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
-        //infowindow = new google.maps.InfoWindow,
-        //query,
-        //places,
-        //marker, 
-        //venue;
+    // var  client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+    //      client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+    //      infowindow = new google.maps.InfoWindow,
+    //      query,
+    //      locations,
+    //      markers, 
+    //      venue;
 
-    //var request = $.ajax({
-        //url:'https://api.foursquare.com/v2/venues/search',
-        //dataType: 'json',
-        //data:   'limit=1' +
-                //'&ll=40.707496,-73.990774' +
-                //'&query=' + places.title() +
-                //'&client_id='+ client_id +
-                //'&client_secret='+ client_secret +
-                //'&v=20161113',
-    //})
+    // var request = $.ajax({
+    //     url:'https://api.foursquare.com/v2/venues/search',
+    //     dataType: 'json',
+    //     data:   'limit=1' +
+    //             '&ll=40.707496,-73.990774' +
+    //             '&query=' + locations.title() +
+    //             '&client_id='+ client_id +
+    //             '&client_secret='+ client_secret +
+    //             '&v=20161113',
+    // })
 }
 
 
