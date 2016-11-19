@@ -46,6 +46,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.row {
+    padding-left: 15px;
+}
+
 /*On different screen sizes, set readable font-size*/
 @media screen and (max-width: 340px) {
     li {
