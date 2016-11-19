@@ -2,12 +2,15 @@
 //Model
 var Location = function(data) {
     var self = this;
-    self.title = ko.observable(data.title);
-    self.lat = ko.observable(data.lat);
-    self.lng = ko.observable(data.lng);
-    self.address = ko.observable('');
-    self.marker = ko.observable('');
-    self.content = ko.observable('');
+    self.title = data.title;
+    self.location = data.location;
+    //self.lat = ko.observable(data.lat);
+    //self.lng = ko.observable(data.lng);
+    //self.address = ko.observable('');
+    //self.marker = ko.observable('');
+    //self.content = ko.observable('');
+    self.showMe = ko.observable(true);
+
 };
 
 //View Model
@@ -17,24 +20,34 @@ var ViewModel = function() {
     self.showErrorMessage = ko.observable(false);
     self.places = ko.observableArray(locations);
     self.query = ko.observable('');
-    //self.filteredLocations = ko.observableArray([]);
-        //Search all available locations for ones whose names match the search queries and add them to the array
-        //for (var x = 0; x < self.places().length; x++) {
-            //if (self.places()[x].title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
-                //self.filteredLocations.push(self.places()[x]);
-            //}
-        //}
-        //Add new filtered markers to the map
-        //for (var i = 0; i < self.filteredLocations().length; i++) {
-            //if (self.filteredLocations()[i].marker.map === null) {
-                //self.filteredLocations()[i].marker.setMap(self.map);
-            //}
-        //}
+    self.filteredLocations = ko.observableArray();
+    
+    for (var i = 0; i < locations.length; i++) {
+        var place = new Location(locations[i]);
+        self.filteredLocations.push(place);
+    }
+    //Search all available locations for ones whose names match the search queries and add them to the array
+    self.filterFunction = ko.computed(function() {
+        var value = self.query();
+        for (var i = 0; i < self.filteredLocations().length; i++) {
+            if (self.filteredLocations()[i].title.toLowerCase().indexOf(value) >= 0) {
+                self.filteredLocations()[i].showMe(true);
+                if (self.filteredLocations()[i].marker) {
+                    self.filteredLocations()[i].marker.setVisible(true);
+                }
+            } else {
+                self.filteredLocations()[i].showMe(false);
+                if (self.filteredLocations()[i].marker) {
+                    self.filteredLocations()[i].marker.setVisible(false);
+                }
+            }
+        }
+    });
 
     // Show the marker when the user clicks the list
-    //self.showInfo = function (places) {
-        //google.maps.event.trigger(places.marker, 'click');
-    //};    
+    self.showInfo = function (locations) {
+        google.maps.event.trigger(locations.marker, 'click');
+    };    
 
     //Run FourSquare API calls to get data
     //var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
@@ -56,6 +69,8 @@ var ViewModel = function() {
                 //'&v=20161113',
     //})
 }
+
+
 
 // This function populates the infowindow when the marker is clicked. 
 function populateInfoWindow(marker, infowindow) {
@@ -89,27 +104,26 @@ var initMap = function() {
 
     var largeInfowindow = new google.maps.InfoWindow();
     // The following group uses the location array to create an array of markers on initialize.
-        for (var i = 0; i < locations.length; i++) {
-            // Get the position from the location array.
-            var position = locations[i].location;
-            var title = locations[i].title;
-            // Create a marker per location, and put into markers array.
-            var marker = new google.maps.Marker({
-                position: position,
-                title: title,
-                animation: google.maps.Animation.DROP,
-                id: i,
-                map: map
-            });
-            // Push the marker to our array of markers.
-            markers.push(marker);
-            // Create an onclick event to open an infowindow at each marker.
-            marker.addListener('click', function() {
-                populateInfoWindow(this, largeInfowindow);
-            });
-        }  
-
-    ko.applyBindings(new ViewModel());
+    for (var i = 0; i < vm.filteredLocations().length; i++) {
+        // Get the position from the location array.
+        var position = vm.filteredLocations()[i].location;
+        var title = vm.filteredLocations()[i].title;
+        // Create a marker per location, and put into markers array.
+        var marker = new google.maps.Marker({
+            position: position,
+            title: title,
+            animation: google.maps.Animation.DROP,
+            id: i,
+            map: map
+        });
+        vm.filteredLocations()[i].marker = marker;
+        // Push the marker to our array of markers.
+        //markers.push(marker);
+        // Create an onclick event to open an infowindow at each marker.
+        marker.addListener('click', function() {
+            populateInfoWindow(this, largeInfowindow);
+        });
+    }
 }
 
 var locations = [{
@@ -173,10 +187,14 @@ var locations = [{
             lng: -73.985893
         }
     }];
+
+
     
 //Show error message when Google Map is unavailable
 function googleError() {
     showMapMessage(true);
 }
 
+var vm = new ViewModel();
+ko.applyBindings(vm);
 
