@@ -19,7 +19,7 @@
         <div class ="error" data-bind="visible: showErrorMessage">
           <h4>Foursquare data is currently not available. Please try again later.</h4>
         </div>
-        <input type="search" class="col-xs-12 searchbar" placeholder="Search ..." data-bind="textInput: query, event: {keyup: filterLocations}">
+        <input type="search" class="col-xs-12 searchbar" placeholder="Search ..." data-bind="textInput: query">
         <div>
           <ul data-bind="foreach: visible" class="nav">
             <li data-bind="text: title, click: $parent.showInfo"></li>
