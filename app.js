@@ -50,10 +50,10 @@ var ViewModel = function() {
     };    
 
     //Run FourSquare API calls to get data
-    // var  client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
-    //      client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+    var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+        client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
     //      infowindow = new google.maps.InfoWindow,
-    //      query,
+        query = "restaurant";
     //      locations,
     //      markers, 
     //      venue;
@@ -62,12 +62,12 @@ var ViewModel = function() {
     //     url:'https://api.foursquare.com/v2/venues/search',
     //     dataType: 'json',
     //     data:   'limit=1' +
-    //             '&ll=40.707496,-73.990774' +
-    //             '&query=' + locations.title() +
-    //             '&client_id='+ client_id +
-    //             '&client_secret='+ client_secret +
-    //             '&v=20161113',
-    // })
+    //              '&ll=40.707496,-73.990774' +
+    //              '&query=' + locations.title() +
+    //              '&client_id='+ client_id +
+    //              '&client_secret='+ client_secret +
+    //              '&v=20161113',
+    //  })
 }
 
 
