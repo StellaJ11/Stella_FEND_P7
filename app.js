@@ -192,7 +192,7 @@ var locations = [{
     
 //Show error message when Google Map is unavailable
 function googleError() {
-    showMapMessage(true);
+    vm.showMapMessage(true);
 }
 
 var vm = new ViewModel();
