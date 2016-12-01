@@ -4,11 +4,6 @@ var Location = function(data) {
     var self = this;
     self.title = data.title;
     self.location = data.location;
-    //self.lat = ko.observable(data.lat);
-    //self.lng = ko.observable(data.lng);
-    //self.address = ko.observable('');
-    //self.marker = ko.observable('');
-    //self.content = ko.observable('');
     self.showMe = ko.observable(true);
 
 };
