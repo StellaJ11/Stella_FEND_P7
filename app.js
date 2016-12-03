@@ -43,49 +43,45 @@ var ViewModel = function() {
         google.maps.event.trigger(locations.marker, 'click');
         //Add functionaility to animate markers
         locations.marker.setAnimation(google.maps.Animation.BOUNCE);
-             setTimeout(function () {
-                 locations.marker.setAnimation(null);
-             }, 1400);
+        setTimeout(function () {
+            locations.marker.setAnimation(null);
+        }, 1400);
     };    
 
-    
+    //Run FourSquare API calls to get data
+    self.places().forEach(function(place) {
+        var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
+            client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
+            query = "restaurant",
+            location, 
+            venue,
 
-}
+        var request = $.ajax({
+            url:'https://api.foursquare.com/v2/venues/search',
+            dataType: 'json',
+            data:   'limit=1' +
+                    '&ll=40.707496,-73.990774' +
+                    '&query=' + place.title +
+                    '&client_id='+ client_id +
+                    '&client_secret='+ client_secret +
+                    '&v=20161113'
+        }).done(function (data) { 
+            // If incoming data has a venues object set the first one to the var venue
+            venue = data.response.hasOwnProperty("venues") ? data.response.venues[0] : '';
 
+            // If the new venue has a property called location set that to the variable location
+            location = venue.hasOwnProperty('location') ? venue.location : '';
+            // If new location has prop address then set the observable address to that or blank
+            if (location.hasOwnProperty('address')) {
+                place.address = location.address || '';
+            }
 
-//Run FourSquare API calls to get data
-// self.places().forEach(function(place) {
-//     var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
-//         client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
-//         query = "restaurant",
-//         location, 
-//         venue
-// });
-
-    // var request = $.ajax({
-    //     url:'https://api.foursquare.com/v2/venues/search',
-    //     dataType: 'json',
-    //     data:   'limit=1' +
-    //              '&ll=40.707496,-73.990774' +
-    //              '&query=' + place.title() +
-    //              '&client_id='+ client_id +
-    //              '&client_secret='+ client_secret +
-    //              '&v=20161113'
-    //    }).done(function (data) { 
-        //     // If incoming data has a venues object set the first one to the var venue
-        //      venue = data.response.hasOwnProperty("venues") ? data.response.venues[0] : '';
-
-        //     // If the new venue has a property called location set that to the variable location
-        //       location = venue.hasOwnProperty('location') ? venue.location : '';
-        //           // If new location has prop address then set the observable address to that or blank
-        //             if (location.hasOwnProperty('address')) {
-        //                 place.address = location.address || '');
-        //             }
-
-        //   }).fail(function (e) {
-        //       infowindow.setContent('<h5>Foursquare data is unavailable.</h5>');
-        //          self.showMessage(true);
-        //     })
+            }).fail(function (e) {
+                infowindow.setContent('<h5>Foursquare data is unavailable.</h5>');
+                self.showMessage(true);
+            });
+        });
+};
        
 
 
