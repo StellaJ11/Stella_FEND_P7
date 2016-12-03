@@ -48,7 +48,7 @@ var ViewModel = function() {
         }, 1400);
     };    
 
-    //Run FourSquare API calls to get data
+    // //Run FourSquare API calls to get data
     self.places().forEach(function(place) {
         var client_id = 'BHU3FSEQDCGVDVFR1MYUNCKJK0HIUZ4SSLPMLDNQTWJCQBNG',
             client_secret = 'QWJVQ0MLI1U4L0ZVHB4W5OJKPYGQEK2GPBF4LQNQJHVBV45X',
@@ -65,22 +65,30 @@ var ViewModel = function() {
                     '&client_id='+ client_id +
                     '&client_secret='+ client_secret +
                     '&v=20161113'
-        }).done(function (data) { 
-            // If incoming data has a venues object set the first one to the var venue
-            venue = data.response.hasOwnProperty("venues") ? data.response.venues[0] : '';
+         }).done(function (data) { 
+             // If incoming data has a venues object set the first one to the var venue
+             venue = data.response.hasOwnProperty("venues") ? data.response.venues[0] : '';
 
-            // If the new venue has a property called location set that to the variable location
-            location = venue.hasOwnProperty('location') ? venue.location : '';
-            // If new location has prop address then set the observable address to that or blank
-            if (location.hasOwnProperty('address')) {
-                place.address = location.address || '';
-            }
+             // If the new venue has a property called location set that to the variable location
+             location = venue.hasOwnProperty('location') ? venue.location : '';
+             // If new location has prop address then set the observable address to that or blank
+             if (location.hasOwnProperty('address')) {
+                 place.address = location.address || '';
+             }
 
-            }).fail(function (e) {
-                infowindow.setContent('<h5>Foursquare data is unavailable.</h5>');
-                self.showMessage(true);
-            });
-        });
+             }).fail(function (e) {
+                 infowindow.setContent('<h5>Foursquare data is unavailable.</h5>');
+                 self.showMessage(true);
+             });
+         });
+
+    //Add event listener for responsiveness
+    google.maps.event.addDomListener(window, 'resize', function() {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(center); 
+    });
+
 };
        
 
