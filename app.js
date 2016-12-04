@@ -92,7 +92,6 @@ var ViewModel = function() {
 };
        
 
-
 // This function populates the infowindow when the marker is clicked. 
 function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
