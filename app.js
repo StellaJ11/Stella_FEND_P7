@@ -56,7 +56,7 @@ var ViewModel = function() {
             location, 
             venue,
 
-        var request = $.ajax({
+        $.ajax({
             url:'https://api.foursquare.com/v2/venues/search',
             dataType: 'json',
             data:   'limit=1' +
