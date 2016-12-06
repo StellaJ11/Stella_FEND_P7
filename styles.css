@@ -84,3 +84,18 @@ h1 {
         width: 100px;
     }
 }
+
+nav {
+  width: 300px;
+  position: absolute;
+  /* This trasform moves the drawer off canvas. */
+  -webkit-transform: translate(-300px, 0);
+  transform: translate(-300px, 0);
+  /* Optionally, we animate the drawer. */
+  transition: transform 0.3s ease;
+}
+
+nav.open {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
