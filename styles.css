@@ -23,7 +23,7 @@ h1 {
     text-align: center;
 }
 
-#map {
+.map-container {
     bottom: 0px;
     height: 100%;
     left: 362px;
@@ -50,52 +50,58 @@ h1 {
     padding-left: 15px;
 }
 
-/*On different screen sizes, set readable font-size*/
-@media screen and (max-width: 340px) {
-    li {
-        font-size: 10px;
-    }
+.hamburger{
+    cursor: pointer;
+    padding: 15px;
+    display: none;
+    float: right;
+}
 
-    li:hover {
-        font-size: 16px;
+.line{
+    border-bottom: 4px solid #bbb;
+    width: 35px;
+    margin-bottom: 6px;
+}
+
+line:last-child{
+    margin-bottom: 0;
+}
+
+.list_container {
+    height: 90%;
+    padding-top: 25px;
+    overflow: hidden;
+}
+
+.list {
+    list-style-type: none; 
+    overflow: auto;
+}
+
+.list-element {
+    width: 100%;
+    font-size: 15px;
+    color: #2F576E;
+    background-color: #B4F1F1 !important;
+    border: 1px solid #2F576E;
+    padding: 10px 20px 10px 10px;
+}
+
+@media screen and (max-width: 800px){ 
+    nav li{
+        width: 100%;
+    }
+    .list_container{
+        height: 0;
+        overflow: auto;
+    }
+    .hamburger{
+        display: inline;
+    }
+    .open{
+        height: 100%;
     }
 }
 
-@media screen and (min-width: 600px) {
-    li {
-        font-size: 14px;
-    }
-    li:hover {
-        font-size: 20px;
-    }
-}
 
-@media screen and (min-width: 800px) {
-    li {
-        font-size: 18px;
-    }
-    li:hover {
-        font-size: 24px;
-    }
-}
 
-@media screen and (max-width: 600px) {
-    #iWindow {
-        width: 100px;
-    }
-}
-
-nav {
-  width: 300px;
-  position: absolute;
-  /* This trasform moves the drawer off canvas. */
-  -webkit-transform: translate(-300px, 0);
-  transform: translate(-300px, 0);
-  /* Optionally, we animate the drawer. */
-  transition: transform 0.3s ease;
-}
-
-nav.open {
-  -webkit-transform: translate(0, 0);
-  transform: translate(0, 0);
-}

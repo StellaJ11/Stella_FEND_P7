@@ -11,8 +11,13 @@
 </head>
   <body>
     <div class="container">
-      <div class="options-box">
+      <nav class="options-box">
         <h3>Awesome Restaurants in Brooklyn, NY</h3>
+        <div class="hamburger">
+          <div class = "line"></div>
+          <div class = "line"></div>
+          <div class = "line"></div>
+        </div>
         <div class ="error" data-bind="visible: showMapMessage">
           <h4>Google Map is currently not loading. Please try again later.</h4>
         </div>
@@ -23,12 +28,14 @@
           <input type="search" class="col-xs-11 searchbar" placeholder="Search ..." data-bind="textInput: query">
         </div>  
         <div>
-          <ul data-bind="foreach: filteredLocations" class="nav">
-            <li data-bind="text: title, click: $parent.showInfo, visible: showMe"></li>
-          </ul>
+          <div class="list_container">
+            <ul data-bind="foreach: filteredLocations">
+              <li data-bind="text: title, click: $parent.showInfo, visible: showMe"></li>
+            </ul>
+          </div>   
         </div>
       </div>
-      <div id="map"></div>
+      <div id="map" class="map-container"></div>
     </div>
     <script src="Library/knockout-3.4.0.js"></script>
     <script src="Library/jquery-2.2.3.min.js"></script>

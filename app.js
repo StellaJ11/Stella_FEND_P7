@@ -220,9 +220,11 @@ function googleError() {
 var vm = new ViewModel();
 ko.applyBindings(vm);
 
-filteredLocations.addEventListener('click', function(e) {
-  drawer.classList.toggle('open');
-  e.stopPropagation();
+$('.hamburger').click(function() {
+ $('.list_container').toggleClass('open');
+ 
 });
-
+$('.location').click(function(){
+    $('.list_container').toggleClass('open');
+});
 
