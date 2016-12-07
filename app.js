@@ -41,24 +41,8 @@ var ViewModel = function() {
     // Show the relevant marker when a user clicks a location from the list
     self.showInfo = function (locations) {
         google.maps.event.trigger(locations.marker, 'click');
-        //Add functionaility to animate markers
-        locations.marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function () {
-            locations.marker.setAnimation(null);
-        }, 1400);
+       
     };    
-
-    // //Run FourSquare API calls to get data
-    // self.filteredLocations().forEach(function(place) {
-        
-    //  });
-
-    //Add event listener for responsiveness
-    // google.maps.event.addDomListener(window, 'resize', function() {
-    //     var center = map.getCenter();
-    //     google.maps.event.trigger(map, "resize");
-    //     map.setCenter(center); 
-    // });
 
 };
        
@@ -153,6 +137,12 @@ var initMap = function() {
         //markers.push(marker);
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
+            //Add functionaility to animate markers
+            var self = this;
+            self.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                self.setAnimation(null);
+            }, 1400);
             populateInfoWindow(this, largeInfowindow);
         });
     }
