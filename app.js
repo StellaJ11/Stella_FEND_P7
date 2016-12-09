@@ -221,10 +221,9 @@ var vm = new ViewModel();
 ko.applyBindings(vm);
 
 $('.hamburger').click(function() {
- $('.list_container').toggleClass('open');
+ $('.container').toggleClass('open');
  
 });
 $('.list_element').click(function(){
-    $('.list_container').toggleClass('open');
+    $('.container').toggleClass('open');
 });
-
