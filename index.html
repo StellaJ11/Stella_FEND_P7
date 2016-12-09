@@ -10,14 +10,14 @@
   <link rel="stylesheet" href="library/bootstrap.min.css">
 </head>
   <body>
+    <div class="hamburger">
+          <div class = "line"></div>
+          <div class = "line"></div>
+          <div class = "line"></div>
+    </div>
     <div class="container">
       <nav class="options-box">
         <h3>Awesome Restaurants in Brooklyn, NY</h3>
-        <div class="hamburger">
-          <div class = "line"></div>
-          <div class = "line"></div>
-          <div class = "line"></div>
-        </div>
         <div class ="error" data-bind="visible: showMapMessage">
           <h4>Google Map is currently not loading. Please try again later.</h4>
         </div>
@@ -30,7 +30,7 @@
         <div>
           <div class="list_container">
             <ul data-bind="foreach: filteredLocations">
-              <li data-bind="text: title, click: $parent.showInfo, visible: showMe"></li>
+              <li class="list_element location" data-bind="text: title, click: $parent.showInfo, visible: showMe"></li>
             </ul>
           </div>   
         </div>
